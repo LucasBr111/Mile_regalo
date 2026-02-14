@@ -21,6 +21,7 @@
             background-color: #000;
             overflow: hidden;
             display: flex;
+            flex-direction: column;
             color: white;
         }
 
@@ -37,129 +38,170 @@
         .overlay-dark {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7));
             z-index: -1;
         }
 
-        /* --- MODAL TIERNO --- */
+        /* --- MODAL ADAPTADO --- */
         #modal-felicitaciones {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.9);
             display: flex; justify-content: center; align-items: center;
             z-index: 1000;
+            padding: 20px;
         }
 
         .modal-content {
             background: var(--blanco);
-            padding: 50px;
-            border-radius: 40px;
+            padding: 30px;
+            border-radius: 30px;
             text-align: center;
-            max-width: 500px;
+            max-width: 400px;
+            width: 100%;
             position: relative;
-            border: 8px solid var(--rosa-claro);
+            border: 6px solid var(--rosa-claro);
             animation: bounceIn 0.8s ease;
         }
 
         .modal-icon {
-            width: 120px;
-            margin-top: -100px;
+            width: 80px;
+            margin-top: -70px;
             filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
             animation: float 3s ease-in-out infinite;
         }
 
         .modal-content h2 {
             font-family: 'Great Vibes', cursive;
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             color: var(--rosa-intenso);
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
-        /* --- LAYOUT --- */
+        /* --- LAYOUT PRINCIPAL --- */
         .main-ui {
             display: flex;
+            flex: 1;
             width: 100%;
-            height: 100%;
-            padding: 40px;
+            height: calc(100vh - 180px); /* Resta espacio para controles */
+            padding: 20px;
             z-index: 10;
+            gap: 20px;
         }
 
         /* Letras en el centro */
         .lyrics-zone {
             flex: 1;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding-bottom: 150px; /* Espacio para controles abajo */
         }
 
         #lyrics-display {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            font-size: clamp(1.5rem, 5vw, 2.5rem); /* Tamaño fluido */
             line-height: 1.4;
-            text-shadow: 2px 2px 15px rgba(0,0,0,0.8);
-            min-height: 150px;
-            transition: all 0.5s ease;
+            text-shadow: 2px 2px 15px rgba(0,0,0,0.9);
+            transition: opacity 0.4s ease;
+            padding: 0 10px;
         }
 
-        /* Playlist a la derecha */
+        /* Playlist a la derecha (Se oculta en móviles muy pequeños o se adapta) */
         .playlist-side {
-            width: 350px;
+            width: 300px;
             background: var(--glass);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
             padding: 20px;
             overflow-y: auto;
             border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: -10px 0 30px rgba(0,0,0,0.3);
         }
 
         .playlist-item {
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 20px;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 15px;
             cursor: pointer;
             transition: 0.3s;
             background: rgba(255,255,255,0.05);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .playlist-item.active {
             background: var(--rosa-intenso);
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
 
-        /* Controles abajo al centro */
+        /* --- CONTROLES ABAJO --- */
         .bottom-controls {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
+            height: 180px;
             width: 100%;
-            max-width: 600px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            padding-bottom: 20px;
         }
 
-        #song-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; }
-        #song-artist { opacity: 0.7; margin-bottom: 15px; }
+        #song-title { 
+            font-family: 'Playfair Display', serif; 
+            font-size: clamp(1.1rem, 4vw, 1.6rem); 
+            margin-bottom: 5px;
+        }
+        #song-artist { font-size: 0.9rem; opacity: 0.7; margin-bottom: 15px; }
 
         .btn-group {
             display: flex;
-            justify-content: center;
             align-items: center;
-            gap: 30px;
+            gap: 25px;
         }
 
         .btn-play {
-            width: 80px; height: 80px; border-radius: 50%;
+            width: 65px; height: 65px; border-radius: 50%;
             background: var(--rosa-intenso); color: white;
-            border: none; cursor: pointer; font-size: 1.5rem;
-            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.4);
+            border: none; cursor: pointer; font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
         }
 
-        /* --- ANIMACIONES --- */
+        .btn-nav {
+            background: none; border: none; color: white; 
+            font-size: 1.8rem; cursor: pointer;
+        }
+
+        /* --- MEDIA QUERIES PARA MÓVILES --- */
+        @media (max-width: 768px) {
+            .main-ui {
+                flex-direction: column; /* Playlist arriba o abajo */
+            }
+            .playlist-side {
+                width: 100%;
+                height: 120px; /* Se vuelve una lista horizontal pequeña */
+                display: flex;
+                overflow-x: auto;
+                overflow-y: hidden;
+                gap: 10px;
+                padding: 10px;
+                order: 2; /* La manda abajo de las letras */
+            }
+            .playlist-item {
+                min-width: 150px;
+                height: 100%;
+                margin-bottom: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                font-size: 0.75rem;
+            }
+            .lyrics-zone {
+                order: 1;
+            }
+        }
+
+        /* Animaciones */
         @keyframes bounceIn {
             0% { transform: scale(0.3); opacity: 0; }
             70% { transform: scale(1.05); }
@@ -167,12 +209,8 @@
         }
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-10px); }
         }
-
-        /* Scrollbar */
-        .playlist-side::-webkit-scrollbar { width: 4px; }
-        .playlist-side::-webkit-scrollbar-thumb { background: var(--rosa-claro); border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -184,8 +222,8 @@
         <div class="modal-content">
             <img src="./assets/img/icons/nosotros.png" class="modal-icon" alt="">
             <h2>Tu regalo del 14❤️</h2>
-            <p style="color: #666; margin-bottom: 30px;">Aunque no es la forma, espero que este detalle pueda alegrarte tanto como vos me alegras a mi ❤️</p>
-            <button class="btn-play" style="width: auto; padding: 0 40px; border-radius: 50px;" onclick="iniciarReproductor()">Entrar ❤️</button>
+            <p style="color: #666; margin-bottom: 25px;">Espero que este detalle te alegre tanto como vos a mí. ❤️</p>
+            <button class="btn-play" style="width: auto; padding: 0 30px; border-radius: 50px; height: 50px;" onclick="iniciarReproductor()">Entrar ❤️</button>
         </div>
     </div>
 
@@ -195,23 +233,24 @@
         </div>
 
         <div class="playlist-side" id="playlist-container">
-            <h3 style="margin-bottom: 20px; font-family: 'Playfair Display';">Nuestras Canciones❤️</h3>
+            <h3 id="playlist-title" style="margin-bottom: 15px; font-family: 'Playfair Display'; font-size: 1rem;">Nuestras Canciones ❤️</h3>
             </div>
     </div>
 
     <div class="bottom-controls">
-        <h2 id="song-title">Cargando...</h2>
-        <p id="song-artist">Artista</p>
+        <h2 id="song-title">---</h2>
+        <p id="song-artist">---</p>
         <div class="btn-group">
-            <button onclick="prevSong()" style="background:none; border:none; color:white; font-size:2rem; cursor:pointer;">⏮</button>
+            <button class="btn-nav" onclick="prevSong()">⏮</button>
             <button class="btn-play" id="play-btn" onclick="togglePlay()">▶</button>
-            <button onclick="nextSong()" style="background:none; border:none; color:white; font-size:2rem; cursor:pointer;">⏭</button>
+            <button class="btn-nav" onclick="nextSong()">⏭</button>
         </div>
     </div>
 
     <audio id="audio-player"></audio>
 
     <script>
+        // ... (Tu lista de canciones se mantiene igual)
         const songs = [
             { number: 1, title: "Someone To Spend Time With", artist: "Los Retros", background: "./songs/s1/s1.gif", audio: "./songs/s1/Los Retros - Someone To Spend Time With.mp3", lyrics: "./songs/s1/song1.lrc" },
             { number: 2, title: "Lover Is a Day", artist: "CUCO", background: "./songs/s2/s2.gif", audio: "./songs/s2/CUCO - Lover Is a Day (Audio).mp3", lyrics: "./songs/s2/song2.lrc" },
@@ -230,6 +269,7 @@
         let lrcLines = [];
         const audio = document.getElementById('audio-player');
         const lyricsDisplay = document.getElementById('lyrics-display');
+        const playBtn = document.getElementById('play-btn');
 
         function cargarPlaylist() {
             const container = document.getElementById('playlist-container');
@@ -252,7 +292,6 @@
             
             audio.src = song.audio;
             
-            // Cargar y procesar LRC
             try {
                 const res = await fetch(song.lyrics);
                 const text = await res.text();
@@ -262,23 +301,23 @@
                 lyricsDisplay.innerText = "Disfruta la música, amor ❤️";
             }
 
-            document.querySelectorAll('.playlist-item').forEach((it, i) => it.classList.toggle('active', i === index));
+            document.querySelectorAll('.playlist-item').forEach((it, i) => {
+                it.classList.toggle('active', i === index);
+                if(i === index && window.innerWidth < 768) it.scrollIntoView({behavior: "smooth", inline: "center"});
+            });
             
             audio.play();
-            document.getElementById('play-btn').innerText = '⏸';
+            playBtn.innerText = '⏸';
         }
 
         function parseLRC(lrcText) {
             lrcLines = [];
             const lines = lrcText.split('\n');
             const timeReg = /\[(\d+):(\d+\.\d+)\]/;
-            
             lines.forEach(line => {
                 const match = timeReg.exec(line);
                 if (match) {
-                    const minutes = parseInt(match[1]);
-                    const seconds = parseFloat(match[2]);
-                    const time = minutes * 60 + seconds;
+                    const time = parseInt(match[1]) * 60 + parseFloat(match[2]);
                     const text = line.replace(timeReg, '').trim();
                     if (text) lrcLines.push({ time, text });
                 }
@@ -288,25 +327,22 @@
         audio.ontimeupdate = () => {
             const time = audio.currentTime;
             const currentLine = lrcLines.filter(l => l.time <= time).pop();
-            if (currentLine) {
-                if (lyricsDisplay.innerText !== currentLine.text) {
-                    lyricsDisplay.style.opacity = 0;
-                    setTimeout(() => {
-                        lyricsDisplay.innerText = currentLine.text;
-                        lyricsDisplay.style.opacity = 1;
-                    }, 200);
-                }
+            if (currentLine && lyricsDisplay.innerText !== currentLine.text) {
+                lyricsDisplay.style.opacity = 0;
+                setTimeout(() => {
+                    lyricsDisplay.innerText = currentLine.text;
+                    lyricsDisplay.style.opacity = 1;
+                }, 200);
             }
         };
 
         function togglePlay() {
-            if (audio.paused) { audio.play(); document.getElementById('play-btn').innerText = '⏸'; }
-            else { audio.pause(); document.getElementById('play-btn').innerText = '▶'; }
+            if (audio.paused) { audio.play(); playBtn.innerText = '⏸'; }
+            else { audio.pause(); playBtn.innerText = '▶'; }
         }
 
         function nextSong() { currentIndex = (currentIndex + 1) % songs.length; loadSong(currentIndex); }
         function prevSong() { currentIndex = (currentIndex - 1 + songs.length) % songs.length; loadSong(currentIndex); }
-        
         function iniciarReproductor() {
             document.getElementById('modal-felicitaciones').style.display = 'none';
             loadSong(0);
