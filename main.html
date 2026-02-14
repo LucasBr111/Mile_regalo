@@ -55,7 +55,11 @@
             <!-- Lado derecho: Texto romántico -->
             <div class="right-side">
                 <p class="romantic-text">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+                    Mi pequeña princesa, dueña de mi vida y de mi amor ❤️ 
+                    En el día de hoy, quiero recordarte lo amada que eres, además de desarte el día más feliz del mundo.
+                    <br><br>
+Que sepas que mi amor por vos es más grande que el infinito, y que no exite nada en este mundo que se compare.
+te amo mucho mucho mucho muchisimo, mi tomatito ❤️
                 </p>
             </div>
         </div>
@@ -72,6 +76,42 @@
         </svg>
     </a>
 </div>
+<div id="reproductor-automatico">
+    <audio id="audio-player" preload="auto"></audio>
 
+</div>
 </body>
 </html>
+<audio id="musica-secreta" loop>
+    <source src="./Coldplay - Sparks.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    const audioSerecto = document.getElementById('musica-secreta');
+    
+    // Configuramos el volumen (0.5 es el 50%)
+    audioSerecto.volume = 0.5;
+
+    // Función para intentar reproducir
+    const intentarReproducir = () => {
+        audioSerecto.play().then(() => {
+            // Si funciona, quitamos los escuchadores para que no se repita el intento
+            quitarEscuchadores();
+        }).catch(error => {
+            console.log("Esperando interacción para sonar...");
+        });
+    };
+
+    // Escuchamos cualquier interacción de ella en la página
+    const eventos = ['click', 'touchstart', 'keydown', 'scroll'];
+    
+    const quitarEscuchadores = () => {
+        eventos.forEach(event => {
+            document.removeEventListener(event, intentarReproducir);
+        });
+    };
+
+    eventos.forEach(event => {
+        document.addEventListener(event, intentarReproducir);
+    });
+</script>
